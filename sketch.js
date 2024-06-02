@@ -14,7 +14,7 @@ function setup() {
 }
 
 function draw() {
-  background('#014b70');
+  background(0);
   if (points.length === 0) {
     let cp = new CirclePacking(width / 2, height / 2, width, height);
     cp.draw();
@@ -27,7 +27,7 @@ function draw() {
       fill(random(colors));
       let size = p.z * (0.5 + 0.5 * sin(TWO_PI * millis() / 3000)); // Animate size
       if (p.z < 30) {
-        circle(p.x, p.y, size);
+        drawShape(p.x, p.y, size, p.shape);
       } else {
         let tt = int(random(30, 40));
         let rgn = 67;
@@ -39,6 +39,31 @@ function draw() {
         }
       }
     }
+  }
+}
+
+function drawShape(x, y, size, shape) {
+  if (shape === 'circle') {
+    circle(x, y, size);
+  } else if (shape === 'triangle') {
+    let h = size * (sqrt(3) / 2); // Height of the triangle
+    beginShape();
+    vertex(x, y - h / 2);
+    vertex(x - size / 2, y + h / 2);
+    vertex(x + size / 2, y + h / 2);
+    endShape(CLOSE);
+  } else if (shape === 'polygon') {
+    let sides = int(random(5, 9)); // Random number of sides for the polygon
+    let angle = TWO_PI / sides;
+    beginShape();
+    for (let i = 0; i < sides; i++) {
+      let vx = x + size * 0.5 * cos(i * angle);
+      let vy = y + size * 0.5 * sin(i * angle);
+      vertex(vx, vy);
+    }
+    endShape(CLOSE);
+  } else if (shape === 'rect') {
+    rect(x, y, size, size);
   }
 }
 
@@ -66,7 +91,10 @@ class CirclePacking {
           break;
         }
       }
-      if (add) this.points.push(createVector(x, y, z));
+      if (add) {
+        let shape = random(['circle', 'triangle', 'polygon', 'rect']);
+        this.points.push({ x: x, y: y, z: z, shape: shape });
+      }
     }
   }
 
@@ -76,18 +104,7 @@ class CirclePacking {
       noFill();
       noStroke();
       fill(random(colors));
-      if (p.z < 30) {
-        circle(p.x, p.y, p.z);
-      } else {
-        let tt = int(random(30, 40));
-        let rgn = 67;
-        for (let j = 0; j < tt; j++) {
-          let mn = map(j, 0, tt, 1, 0.5);
-          let dd = map(j, 0, tt, p.z, p.z * 0);
-          fill(random(colors));
-          form(p.x, p.y, dd, rgn, mn);
-        }
-      }
+      drawShape(p.x, p.y, p.z, p.shape);
     }
   }
 }
