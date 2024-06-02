@@ -1,4 +1,5 @@
 let colors = ['#e6302b', '#fd7800', '#fbd400', '#3bd89f', '#0045e8', '#f477c3', '#70499c', '#006494', '#1b98e0'];
+let points = [];
 
 function setup() {
   createCanvas(740, 740);
@@ -8,13 +9,37 @@ function setup() {
   // Set a timeout to start the animation after 3 seconds
   setTimeout(() => {
     loop(); // Start animation
-  }, 2000); // 3000 milliseconds = 3 seconds
+    setInterval(updatePoints, 3000); // Update points every 3 seconds
+  }, 2000); // 2000 milliseconds = 2 seconds
 }
 
 function draw() {
   background('#014b70');
-  let cp = new CirclePacking(width / 2, height / 2, width, height);
-  cp.draw();
+  if (points.length === 0) {
+    let cp = new CirclePacking(width / 2, height / 2, width, height);
+    cp.draw();
+    points = cp.points;
+  } else {
+    for (let i = 0; i < points.length; i++) {
+      let p = points[i];
+      noFill();
+      noStroke();
+      fill(random(colors));
+      let size = p.z * (0.5 + 0.5 * sin(TWO_PI * millis() / 3000)); // Animate size
+      if (p.z < 30) {
+        circle(p.x, p.y, size);
+      } else {
+        let tt = int(random(30, 40));
+        let rgn = 67;
+        for (let j = 0; j < tt; j++) {
+          let mn = map(j, 0, tt, 1, 0.5);
+          let dd = map(j, 0, tt, size, size * 0);
+          fill(random(colors));
+          form(p.x, p.y, dd, rgn, mn);
+        }
+      }
+    }
+  }
 }
 
 class CirclePacking {
@@ -60,25 +85,32 @@ class CirclePacking {
           let mn = map(j, 0, tt, 1, 0.5);
           let dd = map(j, 0, tt, p.z, p.z * 0);
           fill(random(colors));
-          this.form(p.x, p.y, dd, rgn, mn);
+          form(p.x, p.y, dd, rgn, mn);
         }
       }
     }
   }
+}
 
-  form(x, y, d, num, mn) {
-    push();
-    translate(x, y);
-    beginShape();
-    for (let i = 0; i < num; i++) {
-      let a = map(i, 0, num - 1, 0, PI * 2);
-      let r = d * 0.5;
-      if (i % 2 == 0) r *= mn;
-      let vx = r * cos(a);
-      let vy = r * sin(a);
-      vertex(vx, vy);
-    }
-    endShape();
-    pop();
+function form(x, y, d, num, mn) {
+  push();
+  translate(x, y);
+  beginShape();
+  for (let i = 0; i < num; i++) {
+    let a = map(i, 0, num - 1, 0, PI * 2);
+    let r = d * 0.5;
+    if (i % 2 == 0) r *= mn;
+    let vx = r * cos(a);
+    let vy = r * sin(a);
+    vertex(vx, vy);
   }
+  endShape();
+  pop();
+}
+
+function updatePoints() {
+  points = [];
+  let cp = new CirclePacking(width / 2, height / 2, width, height);
+  cp.draw();
+  points = cp.points;
 }
