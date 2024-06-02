@@ -47,9 +47,11 @@ My inspiration comes from two works.
 One piece of work inspired me about the colour, I wanted the final rendering to be colourful. One piece of work inspired me how to animate, and I wanted to end up with an animation effect that zooms in and out of the image.
 
 ![An image of Inspiration](assets/inspiration2.png)
-_Created by Okazz
+
+_Created by Okazz_
 _[Click the link](https://openprocessing.org/sketch/2168750)_
 
 ![GIF5](assets/inspiration1.GIF)
+
 _Created by ogadaki_
 _[Click the link](https://openprocessing.org/sketch/2268138)_
