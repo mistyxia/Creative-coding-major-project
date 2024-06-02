@@ -31,8 +31,26 @@ I chose time to animating my individual work.
 **Commit3:**
 1. Added shape property to each point in the **CirclePacking class**: In the generatePoints method, each point is randomly assigned a shape (circle, triangle, polygon).
 2. Modified the **draw()** function to draw different shapes: Depending on the shape property of the point, different shapes are drawn.
-3. Added functions to draw triangles and polygons: Added **drawTriangle** and **drawPolygon** functions.
+3. Added functions to draw triangles and polygons: Added **drawTriangle（）** and **drawPolygon()** functions.
 4. Changed the background colour.
 
 ![GIF3](assets/version3.gif)
 
+**Commit4:**
+1. Resized the browser window.
+
+![GIF4](assets/version4.gif)
+
+**Inspiration and References**
+My inspiration comes from two works. 
+
+A piece of work inspired me about the colour, I wanted the final rendering to be colourful. 
+![An image of Inspiration](assets/inspiration2.png)
+_Created by Okazz_
+[Link Text](https://openprocessing.org/sketch/2168750)
+
+
+One piece of work inspired me how to animate, and I wanted to end up with an animation effect that zooms in and out of the image.
+![GIF5](assets/inspiration1.GIF)
+_Created by ogadaki_
+[Link Text](https://openprocessing.org/sketch/2268138)
